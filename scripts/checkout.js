@@ -3,6 +3,8 @@ import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
 let cartSummaryHtml ='';
+
+
 cart.forEach((cartItem)=>{
     const productId = cartItem.productId;
     let matchingProduct;
@@ -13,7 +15,8 @@ cart.forEach((cartItem)=>{
     });
     
 
-      cartSummaryHtml +=`<div class="cart-item-container">
+      cartSummaryHtml +=`<div class="cart-item-container
+       js-cart-item-container-${productId}">
         <div class="delivery-date">
             Delivery date: Tuesday, June 21
         </div>
@@ -92,9 +95,16 @@ cart.forEach((cartItem)=>{
     `;
 });
 document.querySelector('.js-order-summary').innerHTML = cartSummaryHtml;
+
 document.querySelectorAll('.js-delete-link').forEach((link)=>{
     link.addEventListener('click', ()=>{
         const productId = link.dataset.productId;
-        removeFromCart(productId)
+        removeFromCart(productId);
+
+        const container = document.querySelector(
+            `.js-cart-item-container-${productId}`
+        );
+        container.remove();
+        console.log(container);
     });
 })
